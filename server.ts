@@ -274,6 +274,7 @@ function genMainContent(
     return [];
   }
 
+  /*
   return [
     "<![CDATA[",
     tag(
@@ -333,6 +334,36 @@ function genMainContent(
             ":<br>",
             tag("p", reply.quote.text, reply.quote.embed),
             reply.quote.media,
+          )
+          : "",
+      )
+      : "",
+    "]]>",
+  ];
+  */
+
+  return [
+    "<![CDATA[",
+    uriToPostLink(post.uri, usePsky),
+    " ",
+    post.text, post.embed, post.media,
+    (post.quote)
+      ? (
+        `[quote] `, uriToPostLink(post.quote.uri, usePsky),
+        " ",
+        post.quote.text, post.quote.embed, post.quote.media,
+      )
+      : "",
+    (replyContext && reply)
+      ? (
+          `[reply] `, uriToPostLink(reply.uri, usePsky),
+        " ",
+        reply.text, reply.embed, reply.media,
+        (reply.quote)
+          ? (
+            `[quote] `, uriToPostLink(reply.quote.uri, usePsky),
+            " ",
+            reply.quote.text, reply.quote.embed, reply.quote.media,
           )
           : "",
       )
