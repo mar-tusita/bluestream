@@ -346,10 +346,10 @@ function genMainContent(
     "<![CDATA[",
     post.text, " ", post.embed, " ", post.media,
     (post.quote)
-      ? `[quote] ` + post.quote.text + " " + post.quote.embed + " " + post.quote.media
+      ? `<br>[quote] ` + post.quote.text + " " + post.quote.embed + " " + post.quote.media
       : "",
     (replyContext && reply)
-      ? `[reply] ` + reply.text + " " + reply.embed + " " + reply.media
+      ? `<br>[reply] ` + reply.text + " " + reply.embed + " " + reply.media
       : "",
     "]]>",
   ];
