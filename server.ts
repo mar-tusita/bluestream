@@ -26,8 +26,8 @@ function getPost(
   includeEmbed = false,
 ) {
   const embedstr = (
-      AppBskyEmbedExternal.isView(post.embed) && includeEmbed
-    )
+    AppBskyEmbedExternal.isView(post.embed) && includeEmbed
+  )
     ? processExternal(post.embed.external)
     : "";
 
@@ -40,17 +40,17 @@ function getPost(
   const isReply = AppBskyFeedPost.isRecord(post.record) && post.record.reply;
 
   const media = (
-      //if post with media
-      AppBskyEmbedImages.isView(post.embed)
-    )
+    //if post with media
+    AppBskyEmbedImages.isView(post.embed)
+  )
     ? post.embed.images
     : (
-        //if post with media and Quoted post with media
-        AppBskyEmbedRecordWithMedia.isView(post.embed) &&
-        AppBskyEmbedImages.isView(post.embed.media)
-      )
-    ? post.embed.media.images
-    : [];
+      //if post with media and Quoted post with media
+      AppBskyEmbedRecordWithMedia.isView(post.embed) &&
+      AppBskyEmbedImages.isView(post.embed.media)
+    )
+      ? post.embed.media.images
+      : [];
 
   const mediastr = (media.length > 0)
     ? tag(
@@ -87,18 +87,18 @@ function getQuotePost(
   includeEmbed = false,
 ) {
   const quotePost = (
-      //Text-only post with Quoted post with media
-      AppBskyEmbedRecord.isView(post.embed) &&
-      AppBskyEmbedRecord.isViewRecord(post.embed.record)
-    )
+    //Text-only post with Quoted post with media
+    AppBskyEmbedRecord.isView(post.embed) &&
+    AppBskyEmbedRecord.isViewRecord(post.embed.record)
+  )
     ? post.embed.record
     : (
-        //Media post with quoted post with media
-        AppBskyEmbedRecordWithMedia.isView(post.embed) &&
-        AppBskyEmbedRecord.isViewRecord(post.embed.record.record)
-      )
-    ? post.embed.record.record
-    : undefined;
+      //Media post with quoted post with media
+      AppBskyEmbedRecordWithMedia.isView(post.embed) &&
+      AppBskyEmbedRecord.isViewRecord(post.embed.record.record)
+    )
+      ? post.embed.record.record
+      : undefined;
 
   if (!quotePost) return undefined;
   const author = quotePost.author;
@@ -237,17 +237,15 @@ function genTitle(
   }
   if (post.embed) {
     if (AppBskyEmbedRecord.isViewRecord(post.embed.record)) {
-      title = `${title}, quoting ${
-        post.embed.record.author.handle || "unknown"
-      }`;
+      title = `${title}, quoting ${post.embed.record.author.handle || "unknown"
+        }`;
     } else if (
       AppBskyEmbedRecordWithMedia.isView(post.embed) &&
       AppBskyEmbedRecord.isViewRecord(post.embed.record.record)
     ) {
       // NOTE: checking viewRecord may need here
-      title = `${title}, quoting ${
-        post.embed.record.record.author.handle || "unknown"
-      }`;
+      title = `${title}, quoting ${post.embed.record.record.author.handle || "unknown"
+        }`;
     }
   }
   return title;
@@ -277,7 +275,6 @@ function genMainContent(
   }
 
   return [
-    /* MAR: delete P tag */
     "<![CDATA[",
     tag(
       "div",
@@ -340,7 +337,6 @@ function genMainContent(
           : "",
       )
       : "",
-      */
     "]]>",
   ];
 }
@@ -455,8 +451,7 @@ Deno.serve(async (request: Request) => {
     tag(
       "channel",
       tag("title", `Bluestream (${handle})`),
-      `<atom:link href="${
-        sanitize(origin + "/" + did + search)
+      `<atom:link href="${sanitize(origin + "/" + did + search)
       }" rel="self" type="application/rss+xml" />`,
       tag("link", `https://bsky.app/profile/${did}`),
       tag("description", `${handle}'s posts in ${BLUESKY_SERVICE}`),
@@ -480,8 +475,7 @@ Deno.serve(async (request: Request) => {
             ),
           ),
           ...getPost(post).mediaarr.map((image) =>
-            `<enclosure type="image/jpeg" length="0" url="${
-              fullMedia ? image.fullsize : image.thumb
+            `<enclosure type="image/jpeg" length="0" url="${fullMedia ? image.fullsize : image.thumb
             }"/>`
           ).join(""),
           tag("link", uriToPostLink(post.uri, usePsky)),
@@ -489,7 +483,7 @@ Deno.serve(async (request: Request) => {
             "guid",
             { isPermaLink: "false" },
             post.uri +
-              (AppBskyFeedDefs.isReasonRepost(reason) ? "-repost" : ""),
+            (AppBskyFeedDefs.isReasonRepost(reason) ? "-repost" : ""),
           ),
           AppBskyFeedPost.isRecord(post.record)
             ? tag("pubDate", toUTCString(post.record.createdAt))
