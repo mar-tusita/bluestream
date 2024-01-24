@@ -344,8 +344,6 @@ function genMainContent(
 
   return [
     "<![CDATA[",
-    uriToPostLink(post.uri, usePsky),
-    " ",
     post.text, post.embed, post.media,
     (post.quote)
       ? (
