@@ -178,7 +178,7 @@ function processText(
     });
   }
 
-  text = sanitize(text).replace(/\n/g, "<br>");
+  // text = sanitize(text).replace(/\n/g, "<br>");
   if (arr.length > 0) {
     arr.forEach((feature) => {
       text = text.replace(
